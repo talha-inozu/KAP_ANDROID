@@ -60,7 +60,9 @@ class KapFirebaseMessagingService : FirebaseMessagingService() {
             val jwt = KapApplication.instance.readJwt()
             if (!jwt.isNullOrBlank()) {
                 try {
-                    KapApplication.instance.kapApi.updateFcmToken(FcmTokenRequest(token))
+                    val res =
+                        KapApplication.instance.kapApi.updateFcmToken(FcmTokenRequest(token))
+                    res.errorBody()?.close()
                 } catch (_: Exception) {
                 }
             }

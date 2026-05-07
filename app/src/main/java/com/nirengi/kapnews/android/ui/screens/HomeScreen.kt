@@ -48,8 +48,12 @@ fun HomeScreen(onLogout: () -> Unit) {
         }
         try {
             val token = FirebaseMessaging.getInstance().token.await()
-            app.kapApi.updateFcmToken(FcmTokenRequest(token))
-            tokenStatus = "Push token sunucuya gönderildi."
+            val res = app.kapApi.updateFcmToken(FcmTokenRequest(token))
+            res.errorBody()?.close()
+            res.body()?.close()
+            tokenStatus =
+                if (res.isSuccessful) "Push token sunucuya gönderildi."
+                else "Token API hatası (${res.code()})"
         } catch (e: Exception) {
             tokenStatus = "Token gönderilemedi: ${e.message}"
         }

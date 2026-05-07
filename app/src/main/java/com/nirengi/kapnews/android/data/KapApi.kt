@@ -1,6 +1,7 @@
 package com.nirengi.kapnews.android.data
 
 import com.google.gson.annotations.SerializedName
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -30,7 +31,7 @@ interface KapApi {
     suspend fun register(@Body body: RegisterRequest): Response<RegisterResponse>
 
     @POST("users/me/fcm-token")
-    suspend fun updateFcmToken(@Body body: FcmTokenRequest): Response<Unit>
+    suspend fun updateFcmToken(@Body body: FcmTokenRequest): Response<ResponseBody>
 }
 
 /** Minimal fields from backend UserDto JSON. */
